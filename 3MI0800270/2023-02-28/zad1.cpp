@@ -76,4 +76,5 @@ bool removeTransition(stateInfo& arg, size_t from, char c) {
 
 
 int main() {
+
 }

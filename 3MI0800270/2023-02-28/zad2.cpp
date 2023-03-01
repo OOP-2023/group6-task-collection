@@ -47,6 +47,7 @@ void sortTuples(Tuple* tuples, size_t size) {
 }
 
 int main() {
+
     const Tuple tuples[100] = { {0,1},{2,1},{1,1} };
     Tuple* tuples2 = new Tuple[3];
     for (int i = 0;i < 3;i++) {
