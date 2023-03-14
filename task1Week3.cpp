@@ -1,20 +1,85 @@
-﻿// task1Week3.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+﻿#ifndef VECTOR_HEADER
+#define VECTOR_HEADER
+#include <vector>
+/// @brief Клас, който представлява
+/// динамичен масив
+class vector {
+public:
+    /// @brief Създава празен контейнер с capacity 8.
+    vector():vector(8) {}
 
-#include <iostream>
+    vector(const vector& v) :size(0), capacity(v.capacity), data(new int[v.capacity]){
+        for (size_t i = 0; i < size; i++) {
+            data[i] = v.data[i];
+        }
+    }
+    vector(vector&&);
 
-int main()
-{
-    std::cout << "Hello World!\n";
-}
+    vector& operator=(const vector&);
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+    /// @brief Създава контейнер.
+    /// @param argCap големината на контейнера.
+    vector(int argCap) {
+        size = 0;
+        capacity = argCap;
+        data = new int[argCap];
+    }
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+    /// @brief Създава контейнер.
+    /// @param argCap Големината на контейнера.
+    /// @param argDef Началната стойност на всички елементи.
+    vector(int argCap, int argDef) :vector(argCap) {
+        for (int i = 0; i < capacity; i++, size++) {
+            data[i] = argDef;
+        }
+    }
+    // Създава контейнер с argCap големина като всеки елемент е равен на argDef.
+
+    /// @brief Връща число на дадена позиция.
+    /// @param  Позицията от която искаме да четем.
+    int operator[](size_t) const;
+
+    /// @brief Връща число на подадена позиция и позволява промяната му.
+    /// @param  Позицията от която да четем или в която да пишем
+    int& operator[](size_t);
+
+    /// @brief Добавя елемент в колекцията.
+    /// @param  Елемента, който добавяме.
+    void push_back(int push) {
+        if (size == capacity) {
+            capacity *= 2;
+        }
+
+        data[size] = push;
+        size++;
+    }
+
+    /// @brief Премахва последния елемент от колекцията
+    /// @return Последния елемент от колекцията
+    int pop_back();
+
+    ~vector();
+private:
+    int* data;       // < Паметта, в която държим информацията
+    size_t size;     // < Броя елементи в колекцията
+    size_t capacity; // < Максималния брой елементи, които колекцията поддържа
+
+    /// @brief Изтрива паметта
+    void free();
+
+    /// @brief Копира обект
+    void copy(const vector&);
+
+    /// @brief Удвоява размера на обекта. 
+    void resize() {
+        int* dataNew = new int[capacity * 2];
+        for (int i = 0; i < capacity; i++) {
+            dataNew[i] = data[i];
+        }
+        delete[] data;
+        data = dataNew;
+        capacity = capacity * 2;
+    }
+};
+
+#endif
