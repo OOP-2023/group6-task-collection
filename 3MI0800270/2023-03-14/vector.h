@@ -96,13 +96,13 @@ Vector& Vector::operator=(const Vector& vec) {
 
 int Vector::operator[](size_t pos) const {
     if (pos >= size || pos < 0) {
-        throw std::invalid_argument("invalid position");
+        throw std::out_of_range("invalid position");
     }
     return data[pos];
 }
 int& Vector::operator[](size_t pos) {
     if (pos >= size || pos < 0) {
-        throw std::invalid_argument("invalid position");
+        throw std::out_of_range("invalid position");
     }
     return data[pos];
 }
