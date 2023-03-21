@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include <vector>
 using namespace std;
 
 const char FILE_PATH[10] = "zad5.txt";
