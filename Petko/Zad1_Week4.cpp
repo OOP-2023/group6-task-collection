@@ -2,10 +2,71 @@
 //
 
 #include <iostream>
-
+class Time {
+public:
+	Time();
+	Time(int hrs, int minutes, int seconds);
+	Time(size_t n);
+	int getHours();
+	int getMinutes();
+	int getSeconds();
+	void setHours(int);
+	void setMinutes(int);
+	void setSeconds(int);
+	bool compareTime(const Time& other);
+	int elapsedTime() const;
+	Time remainingTime();
+private:
+	int hours;
+	int mins;
+	int secnds;
+};
+Time::Time() {
+	hours = 0;
+	mins = 0;
+	secnds = 0;
+}
+Time::Time(int hrs, int minutes, int seconds) {
+	hours = hrs;
+	mins = minutes;
+	secnds = seconds;
+}
+Time::Time(size_t n) {
+	hours = n / 3600;
+	mins = (n % 3600)/60;
+	secnds = (n % 3600) % 60;
+}
+int Time::getHours() {
+	return hours;
+}
+int Time::getMinutes() {
+	return mins;
+}
+int Time::getSeconds() {
+	return secnds;
+}
+void Time::setHours(int hrs) {
+	hours = hrs;
+}
+void Time::setMinutes(int minutes) {
+	mins = minutes;
+}
+void Time::setSeconds(int seconds) {
+	secnds = seconds;
+}
+int Time::elapsedTime() const {
+	return hours * 3600 + mins * 60 + secnds;
+}
+bool Time::compareTime(const Time& other)
+{
+	return elapsedTime() < other.elapsedTime();
+}
+Time Time::remainingTime() {
+	return Time(24 * 3600 - elapsedTime());
+}
 int main()
 {
-    std::cout << "Hello World!\n";
+ 
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
