@@ -1,0 +1,94 @@
+#include <iostream>
+using namespace std;
+
+#define FIRST_HOUR 0
+#define LAST_HOUR 23
+
+#define FIRST_MINUTE 0
+#define LAST_MINUTE 59
+
+#define FIRST_SECOND 0
+#define LAST_SECOND 59
+
+int assertInRange(int element, int min, int max) {
+    if (element < min || element > max) {
+        throw  std::invalid_argument("element is not in range");
+    }
+
+    return element;
+}
+
+class myTime {
+private:
+    int hours;
+    int minutes;
+    int seconds;
+
+public:
+
+    myTime(size_t n) : myTime(n / 3600, (n % 3600) / 60, n % 60) {}
+
+    myTime(int h = 0, int m = 0, int s = 0 ) {
+        hours = assertInRange(h, FIRST_HOUR, LAST_HOUR);
+        minutes = assertInRange(m, FIRST_MINUTE, LAST_MINUTE);
+        seconds = assertInRange(s, FIRST_SECOND, LAST_SECOND);
+    }
+
+    void print(ostream& out) const {
+        out << hours << ":" << minutes << ":" << seconds << endl;
+    }
+
+    int getHours() const {
+        return hours;
+    }
+
+    int getMinutes() const {
+        return minutes;
+    }
+
+    int getSeconds() const {
+        return seconds;
+    }
+
+    void setHours(int h) {
+        hours = assertInRange(h, FIRST_HOUR, LAST_HOUR);
+    }
+
+    void setMinutes(int m) {
+        minutes = assertInRange(m, FIRST_MINUTE, LAST_MINUTE);
+    }
+
+    void setSeconds(int s) {
+        seconds = assertInRange(s, FIRST_SECOND, LAST_SECOND);
+    }
+
+
+    bool compareTime(const myTime& other) const {
+        if (hours < other.hours) {
+            return true;
+        }
+        else if (hours == other.hours) {
+            if (minutes < other.minutes) {
+                return true;
+            }
+            else if (minutes == other.minutes) {
+                if (seconds < other.seconds) {
+                    return true;
+                }
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
+    myTime timeUntilMidnight() {
+        int remainingSeconds = 24 * 60 * 60 - (hours * 3600 + minutes * 60 + seconds);
+        return myTime(remainingSeconds);
+    }
+
+};
+int main()
+{
+    myTime().print(cout);
+}
