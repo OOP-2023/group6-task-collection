@@ -327,7 +327,6 @@ int main() {
     User users[2] = { u1,u2 };
 
     writeUsers(users, 2, FILE_PATH);
-
     cliStart();
 
     /*goooberrr
