@@ -3,6 +3,7 @@
 /// @brief Клас, който представлява
 /// динамичен масив
 
+#include <iostream>
 class Pair {
 public:
     int value;
