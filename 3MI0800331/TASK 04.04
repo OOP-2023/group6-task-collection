@@ -1,0 +1,73 @@
+#include <iostream>
+#include <cstring>
+#include <vector>
+#include <fstream>
+
+using namespace std;
+
+enum class mode {open, create};
+
+ios_base::openmode asIOSMode(mode m) {
+	if (m == mode::open) {
+		return ios::in | ios::out | ios::app;
+	}
+	else {
+		return ios::in | ios::out | ios::trunc;
+	}
+}
+
+class MessageQueue {
+private:
+	fstream file;
+
+	void open_file(const char* filePath, mode mode) {
+		file.open(filePath, asIOSMode(mode));
+		if (!file.is_open()) {
+			throw runtime_error("failed to open file");
+		}
+	}
+
+public:
+	MessageQueue(const char* filePath, mode mode = mode::create) {
+		open_file(filePath, mode);
+	}
+
+	MessageQueue(const char* filePath, mode mode = mode::open) {
+		open_file(filePath, mode);
+	}
+
+	~MessageQueue() {
+		file.close();
+	}
+
+	void open(const char* filePath, mode mode = mode::open) {
+		file.close(); //hehehe
+		open_file(filePath, mode);
+	}
+	void open(const char* filePath, mode mode = mode::create) {
+		file.close(); //hehehe
+		open_file(filePath, mode);
+	}
+
+	size_t read(char* msg) {
+		file.seekg(0, ios::end);
+		size_t fileSize = file.tellg();
+		file.seekg(0, ios::beg);
+		file.read(msg, fileSize);
+		return fileSize;
+	}
+
+	void write(const char* msg, size_t size) {
+		file.write(msg, size);
+	}
+
+};
+
+
+
+
+
+int main() {
+
+
+}
