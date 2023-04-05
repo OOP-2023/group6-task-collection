@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "Player.h"
 #include <cstring>
 #include <iostream>
@@ -73,9 +74,10 @@ bool Player::enter_password()
 {
 	char pass_enter[200];
 
+	std::cout << "Enter password: " << std::endl;
 	std::cin.getline(pass_enter, 200);
 
-	return strcmp(pass_enter, this->pass);
+	return strcmp(pass_enter, this->pass) == 0;
 }
 
 bool Player::validate_age()
