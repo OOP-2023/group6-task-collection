@@ -17,8 +17,7 @@ int main() {
     Vector<char> vec;
     vec.push_back('l');
     std::cout << vec.pop_back() << std::endl;
-    array<char, 4> arr;
-    arr[0] = 'a';
-    std::cout << arr[0];
+    vec[0] = 'a';
+    std::cout << vec[0];
 
 }
