@@ -1,22 +1,97 @@
-// ConsoleApplication5.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// Zad1_Week8.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include <iostream>
-template <typename T>
-const T& max(T* arr, size_t size)
-{
-	size_t indexOfMaxEl = 0;
-	for (size_t i = 1; i < size; i++)
-	{
-		if (arr[i] > arr[indexOfMaxEl])
-			indexOfMaxEl = i;
-	}
-	return arr[indexOfMaxEl];
+class CarPart {
+	public:
+	char* identificator;
+	char* manufacturer;
+	char* description;
+public:
+	CarPart();
+	~CarPart();
+	CarPart(CarPart const& other);
+	CarPart& operator=(CarPart const& other);
+	CarPart(CarPart&& other);
+	CarPart& operator=(CarPart&& other);
+};
+CarPart::CarPart() {
+	identificator=new char[1];
+	identificator[0] = '\0';
+	manufacturer = new char[1];
+	manufacturer[0] = '\0';
+	description = new char[1];
+	description[0] = '\0';
 }
+CarPart::~CarPart() {
+	delete[] identificator;
+	delete[] manufacturer;
+	delete[] description;
+}
+CarPart::CarPart(CarPart const& other) {
+	identificator = new char[strlen(other.identificator) + 1];
+	strcpy(identificator, other.identificator);
+	manufacturer = new char[strlen(other.manufacturer) + 1];
+	strcpy(manufacturer, other.manufacturer);
+	description = new char[strlen(other.description) + 1];
+	strcpy(description, other.description);
+}
+CarPart& CarPart::operator=(CarPart const& other) {
+	if (this != &other)
+	{
+		delete[] identificator;
+		identificator = new char[strlen(other.identificator) + 1];
+		strcpy(identificator, other.identificator);
+		delete[] manufacturer;
+		manufacturer = new char[strlen(other.manufacturer) + 1];
+		strcpy(manufacturer, other.manufacturer);
+		delete[] description;
+		description = new char[strlen(other.description) + 1];
+		strcpy(description, other.description);
+	}
+	return *this;
+}
+CarPart::CarPart(CarPart&& other) {
+	identificator = other.identificator;
+	other.identificator = nullptr;
+	manufacturer = other.manufacturer;
+	other.manufacturer = nullptr;
+	description = other.description;
+	other.description = nullptr;
+}
+CarPart& CarPart::operator=(CarPart&& other) {
+	if (this != &other) {
+		delete[]identificator;
+		identificator = other.identificator;
+		other.identificator = nullptr;
+		delete[]manufacturer;
+		manufacturer = other.manufacturer;
+		other.manufacturer = nullptr;
+		delete[]description;
+		description = other.description;
+		other.description = nullptr;
+	}
+	return *this;
+}
+class Engine :public CarPart {
+public:
+	unsigned horsePower;
+	
+};
+class Tires :public CarPart {
+public:
+	unsigned width;
+    unsigned profile;
+	unsigned diameter;
+};
+class Battery :public CarPart {
+public:
+	unsigned capacity;
+	char* batteryId;
+};
 int main()
 {
-	int arr[] = { 4,2,6,25,89,4 };
-	std::cout<<max(arr, 6);
+   
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
