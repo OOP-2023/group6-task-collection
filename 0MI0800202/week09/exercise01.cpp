@@ -33,12 +33,12 @@ void Collection::addLabel(Label label)
 {
     collection.push_back(new Label(label));
 }
-void Collection::TextBox(TextBox textBox)
+void Collection::addTextBox(TextBox textBox)
 {
-    collection.push_back(new Label(label));
+    collection.push_back(new TextBox(textBox));
 }
-void Collection::addLabel(Label label)
+void Collection::addRadioButton(RadioButton radioButton)
 {
-    collection.push_back(new Label(label));
+    collection.push_back(new RadioButton(radioButton));
 }
 

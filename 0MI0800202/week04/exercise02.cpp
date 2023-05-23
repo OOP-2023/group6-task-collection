@@ -23,7 +23,7 @@ public:
     {
         return arr;
     }
-    int getSize()
+    int getSize() const
     {
         return currentSize;
     }

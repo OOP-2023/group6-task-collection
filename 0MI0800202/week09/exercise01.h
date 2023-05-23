@@ -55,8 +55,8 @@ private:
     std::vector<ComponentBase*> collection;
 public:
     void addLabel(Label label);
-    void TextBox(TextBox textBox);
-    void RadioButton(RadioButton radioButton);
+    void addTextBox(TextBox textBox);
+    void addRadioButton(RadioButton radioButton);
 };
 void f() {
     std::vector<ComponentBase*> v;
