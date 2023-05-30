@@ -1,0 +1,134 @@
+#include <iostream>
+#include <stdexcept>
+
+using namespace std;
+
+class Event {
+protected:
+    int startHour;
+    int startMinute;
+
+public:
+    Event(int hour, int minute) : startHour(hour), startMinute(minute) {}
+
+    virtual void validateEvent() = 0;
+};
+
+class SimpleEvent : public Event {
+private:
+    int endHour;
+    int endMinute;
+
+public:
+    SimpleEvent(int startHour, int startMinute, int endHour, int endMinute)
+        : Event(startHour, startMinute), endHour(endHour), endMinute(endMinute) {}
+
+    void validateEvent() override {
+        int startTotalMinutes = startHour * 60 + startMinute;
+        int endTotalMinutes = endHour * 60 + endMinute;
+
+        if (endTotalMinutes - startTotalMinutes > 120)
+            throw runtime_error("SimpleEvent duration should not exceed 2 hours.");
+    }
+};
+
+class EventWithFixedIntermission : public Event {
+private:
+    int intermissionStartHour;
+    int intermissionStartMinute;
+    int intermissionEndHour;
+    int intermissionEndMinute;
+    int endHour;
+    int endMinute;
+
+public:
+    EventWithFixedIntermission(int startHour, int startMinute, int intermissionStartHour, int intermissionStartMinute,
+        int intermissionEndHour, int intermissionEndMinute, int endHour, int endMinute)
+        : Event(startHour, startMinute), intermissionStartHour(intermissionStartHour),
+        intermissionStartMinute(intermissionStartMinute), intermissionEndHour(intermissionEndHour),
+        intermissionEndMinute(intermissionEndMinute), endHour(endHour), endMinute(endMinute) {}
+
+    void validateEvent() override {
+        int startTotalMinutes = startHour * 60 + startMinute;
+        int intermissionStartTotalMinutes = intermissionStartHour * 60 + intermissionStartMinute;
+        int intermissionEndTotalMinutes = intermissionEndHour * 60 + intermissionEndMinute;
+        int endTotalMinutes = endHour * 60 + endMinute;
+
+        int eventDuration = endTotalMinutes - startTotalMinutes;
+        int intermissionDuration = intermissionEndTotalMinutes - intermissionStartTotalMinutes;
+
+        if (eventDuration - intermissionDuration > 240)
+            throw runtime_error("EventWithFixedIntermission duration (excluding intermission time) should not exceed 4 hours.");
+    }
+};
+
+class EventWithIntermission : public Event {
+private:
+    int intermissionStartHour;
+    int intermissionStartMinute;
+    int intermissionEndHour;
+    int intermissionEndMinute;
+    int endHour;
+    int endMinute;
+
+public:
+    EventWithIntermission(int startHour, int startMinute, int intermissionStartHour, int intermissionStartMinute,
+        int intermissionEndHour, int intermissionEndMinute, int endHour, int endMinute)
+        : Event(startHour, startMinute), intermissionStartHour(intermissionStartHour),
+        intermissionStartMinute(intermissionStartMinute), intermissionEndHour(intermissionEndHour),
+        intermissionEndMinute(intermissionEndMinute), endHour(endHour), endMinute(endMinute) {}
+
+    void validateEvent() override {
+        int startTotalMinutes = startHour * 60 + startMinute;
+        int intermissionStartTotalMinutes = intermissionStartHour * 60 + intermissionStartMinute;
+        int intermissionEndTotalMinutes = intermissionEndHour * 60 + intermissionEndMinute;
+        int endTotalMinutes = endHour * 60 + endMinute;
+
+        int eventDuration = endTotalMinutes - startTotalMinutes;
+        int intermissionDuration = intermissionEndTotalMinutes - intermissionStartTotalMinutes;
+
+        if (eventDuration - intermissionDuration > 360)
+            throw runtime_error("EventWithIntermission duration (excluding intermission time) should not exceed 6 hours.");
+
+        if (intermissionDuration < 30 || intermissionDuration > 60)
+            throw runtime_error("EventWithIntermission intermission duration should be between 30 minutes and 1 hour.");
+    }
+};
+
+int main() {
+    // Example usage of the event classes
+
+    // Creating objects of the event classes
+    SimpleEvent simpleEvent(9, 0, 11, 30);
+
+    EventWithFixedIntermission eventWithFixedIntermission(13, 0, 13, 20, 13, 40, 17, 0);
+
+    EventWithIntermission eventWithIntermission(10, 30, 15, 30, 16, 30, 19, 0);
+
+    // Validating the events
+    try {
+        simpleEvent.validateEvent();
+        cout << "SimpleEvent is valid." << endl;
+    }
+    catch (const exception& e) {
+        cout << "SimpleEvent validation failed: " << e.what() << endl;
+    }
+
+    try {
+        eventWithFixedIntermission.validateEvent();
+        cout << "EventWithFixedIntermission is valid." << endl;
+    }
+    catch (const exception& e) {
+        cout << "EventWithFixedIntermission validation failed: " << e.what() << endl;
+    }
+
+    try {
+        eventWithIntermission.validateEvent();
+        cout << "EventWithIntermission is valid." << endl;
+    }
+    catch (const exception& e) {
+        cout << "EventWithIntermission validation failed: " << e.what() << endl;
+    }
+
+    return 0;
+}
