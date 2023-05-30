@@ -1,0 +1,54 @@
+#ifndef EMLOYEE_H
+
+#define EMPLOYEE_H
+#include <string>
+
+class Employee {
+	std::string name;
+	int age;
+	int salary;
+};
+
+
+#endif // !EMLOYEE_H
+
+#ifndef TRAINEE_H
+
+#define TRAINEE_H
+
+class trainee {
+	int weeksLeft;
+};
+
+
+#endif // !TRAINEE_H
+#ifndef WORKER_H
+
+#define WORKER_H
+#include <vector>
+
+
+class Worker {
+	int monthsSpentInCompany;
+	std::vector<size_t> prj;
+};
+
+#endif // !WORKER_H
+
+
+#pragma once
+
+#include <iostream>
+#include <cstring>
+
+class 
+#ifndef REALTRAINEE_H
+
+#define REALTRAINEE_H
+
+class RealTrainee {
+	
+};
+
+
+#endif // !REAlTRAINEE_H
