@@ -785,6 +785,9 @@ _pkginfo.txt
 # but keep track of directories ending in .cache
 !?*.[Cc]ache/
 
+# Visual Studio Code personal configs
+.vscode
+
 # Others
 ClientBin/
 ~$*
