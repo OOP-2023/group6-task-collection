@@ -1,0 +1,145 @@
+#include <iostream>
+using namespace std;
+#include <cstring>
+
+class CarPart
+{
+public:
+	CarPart(const char* _id, const char* _manufacturer, const char* _description);
+	CarPart();
+	CarPart(const CarPart&);
+	CarPart& operator=(const CarPart&);
+	~CarPart();
+	void copyFrom(char* to, const char* from)
+	{
+		 to = copyDynamic(from);
+		
+	}
+	void free()
+	{
+		delete[] id;
+		delete[]manufacturer;
+		delete[]description;
+	}
+	char* copyDynamic(const char* arg) {
+		char* toReturn = new char[strlen(arg) + 1];
+		strcpy(toReturn, arg);
+		return toReturn;
+	}
+private:
+	char* id;
+	char* manufacturer;
+	char* description;
+};
+
+CarPart::CarPart(const char* _id, const char* _manufacturer, const char* _description)
+{
+	id = copyDynamic(_id);
+	manufacturer = copyDynamic(_manufacturer);
+	description = copyDynamic(_description);
+}
+CarPart::CarPart(const CarPart& other)
+{
+	free();
+	copyFrom(id, other.id);
+	copyFrom(manufacturer, other.manufacturer);
+	copyFrom(description, other.description);
+}
+
+CarPart& CarPart::operator=(const CarPart& other)
+{
+	if (this != &other) {
+		free();
+		copyFrom(id, other.id);
+		copyFrom(manufacturer, other.manufacturer);
+		copyFrom(description, other.description);
+	}
+	return *this;
+}
+
+CarPart::~CarPart()
+{
+	free();
+}
+
+class Tyre : CarPart
+{
+public:
+	Tyre(unsigned int _width, unsigned int _profile,	unsigned int _diameter);
+	~Tyre();
+	void validation(unsigned int number,int min, int max);
+	void setWidth(const unsigned int& _width);
+	const unsigned int getWidth() const;
+	void setProfile(const unsigned int& _width);
+	const unsigned int getProfile() const;
+	void setDiameter(const unsigned int& _width);
+	const unsigned int getDiameter() const;
+private:
+	unsigned int width;
+	unsigned int profile;
+	unsigned int diameter;
+};
+
+void Tyre::validation(unsigned int number, int min, int max)
+{
+	if (number < min && number > max)
+	{
+	  throw "Not valid size";
+	}
+}
+
+Tyre::Tyre(unsigned int _width, unsigned int _profile, unsigned int _diameter)
+{
+
+}
+
+void Tyre::setWidth(const unsigned int& _width)
+{
+	(validation(_width, 155, 365));
+		width = _width;
+
+}
+const unsigned int Tyre::getWidth() const
+{
+	return width;
+}
+void Tyre::setProfile(const unsigned int& _profile)
+{
+	validation(_profile, 30, 80);
+	profile = _profile;
+}
+const unsigned int Tyre::getProfile() const
+{
+	return profile;
+}
+void Tyre::setDiameter(const unsigned int& _diameter)
+{
+	    validation(_diameter, 30, 80);
+		diameter = _diameter;
+}
+const unsigned int Tyre::getDiameter() const
+{
+	return diameter;
+}
+Tyre::~Tyre()
+{
+}
+
+class Engine :CarPart {
+private:
+	unsigned int horsepower;
+public:
+	Engine(const char* id, const char* name, const char* description, unsigned int _horsepower);
+	const unsigned int getHorsepower() const;
+	void setHorsepower(const unsigned int other);
+};
+Engine::Engine(const char* id, const char* name, const char* description, unsigned int _horsepower) :CarPart(id, name, description) {
+	horsepower = _horsepower;
+}
+const unsigned int Engine::getHorsepower() const {
+	return horsepower;
+}
+void Engine::setHorsepower(const unsigned int other) {
+	horsepower = other;
+}
+
