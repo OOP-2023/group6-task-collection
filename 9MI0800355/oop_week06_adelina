@@ -1,0 +1,39 @@
+// oop_week06_adelina.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+#include <fstream>
+#include <iostream>
+
+unsigned const MAX_NUMBERS = 100;
+
+struct Example {
+    int data;
+    char buff[8];
+};
+
+int read(const char* prompt, std::ifstream &i_file) {
+    int n;
+    std::cout << prompt;
+    std::cin >> n;
+    return n;
+    char input[MAX_NUMBERS];
+    for (size_t i = 0; i < n; i++)
+    {
+        char line[MAX_NUMBERS];
+        
+
+
+    }
+}
+//Example readExample() {
+//    int data = readInt("Enter data: ");
+//    std::cin.get(readExample, 10, '.');
+//}
+
+int main()
+{
+    std::ifstream i_file("I", std::ios::binary);
+    
+    
+    
+}
+
